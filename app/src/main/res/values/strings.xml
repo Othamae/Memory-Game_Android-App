@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MemoryGame</string>
+    <string name="texto_inicio1">Memory</string>
+    <string name="texto_inicio2">Game</string>
+    <string name="boton_inicio">Start</string>
+    <string name="boton_salir">Exit</string>
+    <string name="boton_juego_reiniciar">Reset</string>
+    <string name="boton_juego_salir">Exit</string>
+
+</resources>
