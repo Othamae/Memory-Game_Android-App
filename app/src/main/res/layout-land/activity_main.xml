@@ -12,13 +12,14 @@
         style="@style/Widget.AppCompat.TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="88dp"
         android:fontFamily="cursive"
         android:gravity="center"
         android:textColor="#F4EFEF"
         android:textSize="96sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></TextView>
 
@@ -42,7 +43,7 @@
         android:id="@+id/boton_inicio"
         android:layout_width="190dp"
         android:layout_height="91dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="#FFC107"
         android:fontFamily="cursive"
         android:text="@string/boton_inicio"
@@ -50,27 +51,25 @@
         android:textStyle="bold"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.223"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@+id/textView" />
 
     <Button
         android:id="@+id/boton_salir"
         android:layout_width="190dp"
         android:layout_height="91dp"
-        android:layout_marginTop="20dp"
         android:backgroundTint="#FFC107"
         android:fontFamily="cursive"
         android:text="@string/boton_salir"
         android:textSize="50dp"
         android:textStyle="bold"
         app:cornerRadius="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/boton_inicio"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.259"
+        app:layout_constraintStart_toEndOf="@+id/boton_inicio"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

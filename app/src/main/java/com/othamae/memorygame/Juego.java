@@ -104,7 +104,7 @@ public class Juego extends Activity {
         textoPuntuacion = findViewById(R.id.texto_puntuacion);
         puntuacion = 0;
         aciertos = 0;
-        textoPuntuacion.setText("Puntuacion: "+ puntuacion);
+        textoPuntuacion.setText("Score: "+ puntuacion);
     }
 
     private void cargarImagenes(){
@@ -149,9 +149,9 @@ public class Juego extends Activity {
                 bloqueo = false;
                 aciertos++;
                 puntuacion++;
-                textoPuntuacion.setText("Puntuacion: "+ puntuacion);
+                textoPuntuacion.setText("Score: "+ puntuacion);
                 if (aciertos == imagenes.length){
-                    Toast toast = Toast.makeText(getApplicationContext(), "Has ganado!!", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplicationContext(), "You Win!!", Toast.LENGTH_LONG);
                     toast.show();
                 }
             }else{
@@ -167,7 +167,7 @@ public class Juego extends Activity {
                         bloqueo = false;
                         primero = null;
                         puntuacion--;
-                        textoPuntuacion.setText("Puntuacion: "+ puntuacion);
+                        textoPuntuacion.setText("Score: "+ puntuacion);
                     }
                 },1000);
 
