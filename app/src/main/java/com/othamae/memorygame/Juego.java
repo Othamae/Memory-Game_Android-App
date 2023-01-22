@@ -38,6 +38,8 @@ public class Juego extends Activity {
     final Handler handler = new Handler();
 
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
