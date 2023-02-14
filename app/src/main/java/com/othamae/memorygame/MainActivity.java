@@ -42,17 +42,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-/*
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-*/
 
 
 }

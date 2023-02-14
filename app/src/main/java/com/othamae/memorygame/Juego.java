@@ -3,6 +3,8 @@ package com.othamae.memorygame;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,6 +17,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
 public class Juego extends Activity {
 
     //Variables componentes vista
@@ -24,6 +27,10 @@ public class Juego extends Activity {
     TextView textoPuntuacion;
     int puntuacion;
     int aciertos;
+    //boolean firstTime = true;
+
+    boolean [] destapado = new boolean[16];
+    int fichaActual = -1;
 
 
     //Imagenes
@@ -37,6 +44,10 @@ public class Juego extends Activity {
     boolean bloqueo = false;
     final Handler handler = new Handler();
 
+    boolean primeraAbierta = false;
+    boolean segundaAbierta = false;
+    boolean firstTime= true;
+
 
 
 
@@ -47,7 +58,51 @@ public class Juego extends Activity {
         init();
     }
 
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("Punctuation", puntuacion);
+        outState.putIntegerArrayList("arraydes", arrayDesordenado);
+        outState.putBooleanArray("estado", destapado);
+        outState.putInt("actual", fichaActual);
+        outState.putInt("primeraCarta", primeraCarta);
+        outState.putInt("segundaCarta", segundaCarta);
+        outState.putInt("aciertos", aciertos);
+        outState.putBoolean("primeraAbierta", primeraAbierta);
+        outState.putBoolean("segundaAbierta", segundaAbierta);
+        outState.putBoolean("firstTime", firstTime);
+    }
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        puntuacion = savedInstanceState.getInt("Punctuation");
+        textoPuntuacion.setText("Score: "+ puntuacion);
+        arrayDesordenado = savedInstanceState.getIntegerArrayList("arraydes");
+        destapado = savedInstanceState.getBooleanArray("estado");
+        fichaActual = savedInstanceState.getInt("actual");
+        aciertos = savedInstanceState.getInt("aciertos");
+        primeraAbierta = savedInstanceState.getBoolean("primeraAbierta");
+        segundaAbierta = savedInstanceState.getBoolean("segundaAbierta");
+        firstTime = savedInstanceState.getBoolean("firstTime");
+        primeraCarta = savedInstanceState.getInt("primeraCarta");
+        segundaCarta = savedInstanceState.getInt("segundaCarta");
+        if (primeraAbierta && !segundaAbierta){
+            primero = tablero[primeraCarta];
+        }
+        for (int i = 0; i < 16; i++) {
+            if (destapado[i]){
+                tablero[i].setImageResource(imagenes[arrayDesordenado.get(i)]);
+                tablero[i].setEnabled(false);
+            }
+        }
+    }
+
+
+
     //METODOS
+
     private void cargarTablero(){
         imb00 = findViewById(R.id.boton00);
         imb01 = findViewById(R.id.boton01);
@@ -133,19 +188,29 @@ public class Juego extends Activity {
         return result;
     }
 
+    int primeraCarta ;
+    int segundaCarta ;
+
     private void comprobar(int i, final ImageButton img){
         if (primero == null){
             primero = img;
             primero.setScaleType(ImageView.ScaleType.CENTER_CROP);
             primero.setImageResource(imagenes[arrayDesordenado.get(i)]);
+            fichaActual=arrayDesordenado.get(i);
             primero.setEnabled(false);
+            primeraAbierta= true;
             numPrimero = arrayDesordenado.get(i);
+            primeraCarta = i;
+            destapado[primeraCarta]= true;
         }else {
             bloqueo = true;
             img.setScaleType(ImageView.ScaleType.CENTER_CROP);
             img.setImageResource(imagenes[arrayDesordenado.get(i)]);
             img.setEnabled(false);
             numSegundo = arrayDesordenado.get(i);
+            segundaCarta = i;
+            segundaAbierta= true;
+            destapado[segundaCarta]= true;
             if (numPrimero == numSegundo){
                 primero = null;
                 bloqueo = false;
@@ -157,6 +222,9 @@ public class Juego extends Activity {
                     toast.show();
                 }
             }else{
+                destapado[primeraCarta]= false;
+                destapado[segundaCarta]= false;
+                fichaActual = -1;
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -172,6 +240,8 @@ public class Juego extends Activity {
                         textoPuntuacion.setText("Score: "+ puntuacion);
                     }
                 },1000);
+                primeraAbierta = false;
+                segundaAbierta = false;
 
             }
         }
@@ -183,19 +253,13 @@ public class Juego extends Activity {
         cargarTexto();
         cargarImagenes();
         arrayDesordenado = barajar(imagenes.length);
+
         for (int i=0; i<tablero.length; i++){
             tablero[i].setScaleType(ImageView.ScaleType.CENTER_CROP);
-            tablero[i].setImageResource(imagenes[arrayDesordenado.get(i)]);
+            tablero[i].setImageResource(fondo);
+            tablero[i].setTag(imagenes[arrayDesordenado.get(i)]);
+
         }
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                for (int i=0; i<tablero.length; i++){
-                    tablero[i].setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    tablero[i].setImageResource(fondo);
-                }
-            }
-        }, 500);
 
         for (int i= 0; i< tablero.length; i++){
             final int j = i;
